@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Chapter {
+  id    String   @id
+  link  String
+  title String
+  date  DateTime @default(now()) @db.Date
+  Page  Page[]
+}
+
+model Group {
+  id    String  @id
+  name  String
+  Manga Manga[]
+}
+
+model Halaman {
+  id      String  @id
+  img     String
+  issueId String?
+  Issue   Issue?  @relation(fields: [issueId], references: [id])
+}
+
+model Issue {
+  id      String    @id
+  title   String
+  thumb   String
+  date    DateTime  @default(now())
+  komikId String?
+  Halaman Halaman[]
+  Komik   Komik?    @relation(fields: [komikId], references: [id])
+}
+
+model Komik {
+  id     String   @id
+  title  String
+  slug   String   @unique
+  poster String
+  date   DateTime @default(now())
+  Issue  Issue[]
+}
+
+model Manga {
+  id      String   @id
+  title   String
+  thumb   String
+  date    DateTime @default(now())
+  groupId String?
+  Group   Group?   @relation(fields: [groupId], references: [id])
+  Peji    Peji[]
+}
+
+model Page {
+  id        String   @id
+  img       String
+  chapterId String?
+  Chapter   Chapter? @relation(fields: [chapterId], references: [id])
+}
+
+model Peji {
+  id      String  @id
+  img     String
+  mangaId String?
+  Manga   Manga?  @relation(fields: [mangaId], references: [id])
+}
