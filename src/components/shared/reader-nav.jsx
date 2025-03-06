@@ -13,13 +13,13 @@ const ReaderNav = ({ data }) => {
 				)}
 			>
 				<PiCaretDoubleLeftBold />
-				<p className="hidden md:block">Previous Chapter</p>
+				<p className="hidden md:block">Chapter Sebelumnya</p>
 			</Link>
 			<Link
 				href={data.list}
 				className="py-2.5 bg-primary text-primary-foreground flex justify-center items-center gap-2 hover:bg-muted"
 			>
-				<p className="hidden md:block">List Chapter</p>
+				<p className="hidden md:block">Daftar Chapter</p>
 				<PiListBulletsBold className="block md:hidden" />
 			</Link>
 			<Link
@@ -29,7 +29,7 @@ const ReaderNav = ({ data }) => {
 					!data.next && "pointer-events-none"
 				)}
 			>
-				<p className="hidden md:block">Next Chapter</p>
+				<p className="hidden md:block">Chapter Selanjutnya</p>
 				<PiCaretDoubleRightBold />
 			</Link>
 		</div>

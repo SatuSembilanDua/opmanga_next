@@ -10,6 +10,16 @@ export const LogoHead = () => {
 	)
 }
 
+export const KimokLogo = () => {
+	return (
+		<>
+			<Link href={"/kimok"}>
+				<SvgAppLogo className="text-white h-10" />
+			</Link>
+		</>
+	)
+}
+
 export const SvgAppLogo = (props) => {
 	return (
 		<>

@@ -12,7 +12,7 @@ export const generateMetadata = async ({ params }) => {
 
 const ViewPage = async ({ params }) => {
 	const { id } = await params
-  const data = await pageModel.getPage(id)
+  const data = await pageModel.getPageData(id)
   return (
     <>
       <ReadPage pageTitle={`One Piece - ${data.title}`} data={data} />

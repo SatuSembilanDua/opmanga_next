@@ -29,7 +29,7 @@ const SelectChapter = ({ options, defaultValue }) => {
 					onClick={toggleDropdown}
 					className="bg-card text-card-foreground border border-border rounded-md px-4 py-2 text-sm flex items-center justify-between w-full"
 				>
-					{"Select Chapter..."}
+					{"Pilih Chapter..."}
 					<PiCaretDown className={cn("w-4 h-4 ml-2 transition-transform", isOpen && "rotate-180")} />
 				</button>
 				{isOpen && (
