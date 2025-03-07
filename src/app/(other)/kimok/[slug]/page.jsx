@@ -39,7 +39,7 @@ const ChapterPage = async ({ params, searchParams }) => {
 	// console.log(data)
 	return (
 		<>
-			<div className="flex justify-between items-center">
+			<div className="flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center mb-4 md:mb-0">
 				<PageTitle>{komik.title}</PageTitle>
 				<div>
 					<Search />

@@ -111,3 +111,64 @@ issueModel.getPageData = async function (slug, id) {
 	data["nav"] = { prev, next, current: id, list: "/" }
 	return data
 }
+
+export const groupModel = new DataModel(prisma.group, "group", {})
+export const mangaModel = new DataModel(prisma.manga, "manga", {
+	include: {
+		Group: true,
+	},
+	orderBy: [
+		{
+			date: "desc",
+		},
+	],
+	searh_config: [
+		{
+			title: {
+				contains: "",
+				mode: "insensitive",
+			},
+		},
+		{
+			Group: {
+				name: {
+					contains: "",
+					mode: "insensitive",
+				},
+			},
+		},
+	],
+})
+export const pajiModel = new DataModel(prisma.manga, "peji", {
+	include: {
+		Group: true,
+		Peji: true,
+	},
+	orderBy: [
+		{
+			id: "desc",
+		},
+	],
+})
+pajiModel.getPageData = async function (id) {
+	const rawData = await this.get(id)
+	let data = { id: rawData.id, title: rawData.title, Page: rawData.Peji }
+	const dataAllChapter = await this.tbl.findMany({
+		select: {
+			id: true,
+			title: true,
+		},
+		orderBy: [
+			{
+				date: "desc",
+			},
+		],
+	})
+	const allChapter = dataAllChapter.map((e) => ({ ...e, link: `/manga/${e.id}` }))
+	const index = allChapter.findIndex((e) => e.id === id)
+	const prev = index === 0 ? "" : allChapter[index - 1].link
+	const next = index === allChapter.length - 1 ? "" : allChapter[index + 1].link
+	data["allChapter"] = allChapter
+	data["nav"] = { prev, next, current: id, list: "/" }
+	return data
+}
