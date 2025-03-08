@@ -1,7 +1,30 @@
+"use client"
+import { signIn } from "next-auth/react"
 import { LogoHead } from "@/components/shared/app-logo"
-import Link from "next/link"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 const LoginPage = () => {
+	const [email, setEmail] = useState("")
+	const [password, setPassword] = useState("")
+	const [error, setError] = useState("")
+	const router = useRouter()
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+		const result = await signIn("credentials", {
+			email,
+			password,
+			redirect: false,
+		})
+
+		if (result?.error) {
+			setError(result.error)
+		} else {
+			router.push("/kimok")
+		}
+	}
+
 	return (
 		<>
 			<div className="bg-primary">
@@ -14,17 +37,19 @@ const LoginPage = () => {
 							<h1 className="text-xl font-bold leading-tight tracking-tight text-card-foreground md:text-2xl">
 								Sign in to your account
 							</h1>
-							<form className="space-y-4 md:space-y-6">
+							<form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
 								<div>
 									<label htmlFor="email" className="block mb-2 text-sm font-medium text-card-foreground">
 										Your email
 									</label>
 									<input
-										type="email"
+										type="text"
 										name="email"
 										id="email"
 										className="w-full border p-2 text-sm outline-2 rounded-sm"
 										placeholder="name@company.com"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
 									/>
 								</div>
 								<div>
@@ -38,8 +63,11 @@ const LoginPage = () => {
 										placeholder="••••••••"
 										autoComplete="on"
 										className="w-full border p-2 text-sm outline-2 rounded-sm"
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
 									/>
 								</div>
+								{error && <div className="text-destructive">{error}</div>}
 								<button
 									type="submit"
 									className="w-full text-primary-foreground bg-primary hover:bg-secondary focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"

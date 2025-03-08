@@ -1,6 +1,19 @@
+"use client"
+import { SessionProvider, useSession, signOut } from "next-auth/react"
 import Link from "next/link"
 
 const NavBar = () => {
+	return (
+		<>
+			<SessionProvider>
+				<NavbarContent />
+			</SessionProvider>
+		</>
+	)
+}
+
+const NavbarContent = () => {
+	const { data: session } = useSession()
 	return (
 		<>
 			<div className="bg-primary md:px-20 border-b-4 border-dialect">
@@ -8,10 +21,19 @@ const NavBar = () => {
 					<div className="flex justify-start items-center">
 						<NavLink href={"/"} label={"One Piece"} />
 						<NavLink href={"/kimok"} label={"Komik"} />
-						<NavLink href={"/manga"} label={"Manga"} />
+						{session && <NavLink href={"/manga"} label={"Manga"} />}
 					</div>
 					<div className="flex justify-start items-center">
-						<NavLink href={"/login"} label={"Login"} />
+						{session ? (
+							<button
+								onClick={() => signOut()}
+								className="px-4 py-2 text-primary-foreground hover:bg-dialect cursor-pointer"
+							>
+								Logout
+							</button>
+						) : (
+							<NavLink href={"/login"} label={"Login"} />
+						)}
 					</div>
 				</div>
 			</div>
