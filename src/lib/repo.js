@@ -24,7 +24,7 @@ export const pageModel = new DataModel(prisma.chapter, "page", {
 	orderBy: [
 		{
 			Page: {
-				id: "desc",
+				id: "asc",
 			},
 		},
 	],
@@ -48,6 +48,7 @@ pageModel.getPageData = async function (id) {
 	const next = index === allChapter.length - 1 ? "" : allChapter[index + 1].link
 	data["allChapter"] = allChapter.reverse()
 	data["nav"] = { prev, next, current: id, list: "/" }
+	data["Page"] = data["Page"].sort((a, b) => a.id.localeCompare(b.id))
 	return data
 }
 
@@ -85,7 +86,7 @@ issueModel.getPageData = async function (slug, id) {
 			id,
 		},
 	})
-	let data = { id: rawData.id, title: rawData.title, Page: rawData.Halaman }
+	let data = { id: rawData.id, title: rawData.title, Page: rawData.Halaman.sort((a, b) => a.id.localeCompare(b.id)) }
 	const dataAllChapter = await this.tbl.findMany({
 		select: {
 			id: true,
@@ -108,7 +109,7 @@ issueModel.getPageData = async function (slug, id) {
 	const prev = index === 0 ? "" : allChapter[index - 1].link
 	const next = index === allChapter.length - 1 ? "" : allChapter[index + 1].link
 	data["allChapter"] = allChapter
-	data["nav"] = { prev, next, current: id, list: "/" }
+	data["nav"] = { prev, next, current: id, list: `/kimok/${slug}` }
 	return data
 }
 
@@ -152,7 +153,7 @@ export const pajiModel = new DataModel(prisma.manga, "peji", {
 })
 pajiModel.getPageData = async function (id) {
 	const rawData = await this.get(id)
-	let data = { id: rawData.id, title: rawData.title, Page: rawData.Peji }
+	let data = { id: rawData.id, title: rawData.title, Page: rawData.Peji.sort((a, b) => a.id.localeCompare(b.id)) }
 	const dataAllChapter = await this.tbl.findMany({
 		select: {
 			id: true,
@@ -169,6 +170,6 @@ pajiModel.getPageData = async function (id) {
 	const prev = index === 0 ? "" : allChapter[index - 1].link
 	const next = index === allChapter.length - 1 ? "" : allChapter[index + 1].link
 	data["allChapter"] = allChapter
-	data["nav"] = { prev, next, current: id, list: "/" }
+	data["nav"] = { prev, next, current: id, list: "/manga" }
 	return data
 }
