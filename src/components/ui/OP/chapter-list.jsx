@@ -6,7 +6,7 @@ const ChapterList = ({ data }) => {
 	return (
 		<>
 			{data.map((e) => (
-				<Link key={e.id} href={`/view/${e.id}`} className="block border-b last:border-none">
+				<Link key={e.id} href={`/view/${e.id}`} className="linking block border-b last:border-none">
 					<div className="py-1 flex justify-start items-center gap-2 hover:bg-muted">
 						<PiHashBold size={32} className="text-muted-foreground" />
 						<div>

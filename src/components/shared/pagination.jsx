@@ -19,7 +19,7 @@ const Pagination = ({ totalPages }) => {
 	const allPages = generatePagination(currentPage, totalPages)
 
 	const PaginationNumber = ({ page, href, position, isActive }) => {
-		const className = clsx("flex h-10 w-10 items-center justify-center text-sm border border-dialect", {
+		const className = clsx("linking flex h-10 w-10 items-center justify-center text-sm border border-dialect", {
 			"rounded-l-sm": position === "first" || position === "single",
 			"rounded-r-sm": position === "last" || position === "single",
 			"z-10 bg-primary text-primary-foreground boder-border": isActive,
@@ -37,12 +37,15 @@ const Pagination = ({ totalPages }) => {
 	}
 
 	const PaginationArrow = ({ href, direction, isDisabled }) => {
-		const className = clsx("flex h-10 w-10 items-center justify-center text-sm border border-dialect rounded-sm", {
-			"pointer-events-none text-muted-foreground": isDisabled,
-			"hover:bg-primary hover:text-primary-foreground": !isDisabled,
-			"mr-2": direction === "left",
-			"ml-2": direction === "right",
-		})
+		const className = clsx(
+			"linking flex h-10 w-10 items-center justify-center text-sm border border-dialect rounded-sm",
+			{
+				"pointer-events-none text-muted-foreground": isDisabled,
+				"hover:bg-primary hover:text-primary-foreground": !isDisabled,
+				"mr-2": direction === "left",
+				"ml-2": direction === "right",
+			}
+		)
 
 		const icon = direction === "left" ? <PiCaretLeftBold size={20} /> : <PiCaretRightBold size={20} />
 

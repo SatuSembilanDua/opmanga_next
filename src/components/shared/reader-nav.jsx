@@ -4,34 +4,36 @@ import { PiCaretDoubleLeftBold, PiCaretDoubleRightBold, PiListBulletsBold } from
 
 const ReaderNav = ({ data }) => {
 	return (
-		<div className="grid grid-cols-3">
-			<Link
-				href={data.prev}
-				className={cn(
-					"rounded-l-md py-2.5 bg-dialect text-white flex justify-center items-center gap-2 hover:bg-muted",
-					!data.prev && "pointer-events-none"
-				)}
-			>
-				<PiCaretDoubleLeftBold />
-				<p className="hidden md:block">Chapter Sebelumnya</p>
-			</Link>
-			<Link
-				href={data.list}
-				className="py-2.5 bg-primary text-primary-foreground flex justify-center items-center gap-2 hover:bg-muted"
-			>
-				<p className="hidden md:block">Daftar Chapter</p>
-				<PiListBulletsBold className="block md:hidden" />
-			</Link>
-			<Link
-				href={data.next}
-				className={cn(
-					"rounded-r-md py-2.5 bg-dialect text-white flex justify-center items-center gap-2 hover:bg-muted",
-					!data.next && "pointer-events-none"
-				)}
-			>
-				<p className="hidden md:block">Chapter Selanjutnya</p>
-				<PiCaretDoubleRightBold />
-			</Link>
+		<div className="sticky bottom-0">
+			<div className="grid grid-cols-3">
+				<Link
+					href={data.prev}
+					className={cn(
+						"linking rounded-l-md py-2.5 bg-dialect text-white flex justify-center items-center gap-2 hover:bg-muted",
+						!data.prev && "pointer-events-none"
+					)}
+				>
+					<PiCaretDoubleLeftBold />
+					<p className="hidden md:block">Chapter Sebelumnya</p>
+				</Link>
+				<Link
+					href={data.list}
+					className="linking py-2.5 bg-primary text-primary-foreground flex justify-center items-center gap-2 hover:bg-muted"
+				>
+					<p className="hidden md:block">Daftar Chapter</p>
+					<PiListBulletsBold className="block md:hidden" />
+				</Link>
+				<Link
+					href={data.next}
+					className={cn(
+						"linking rounded-r-md py-2.5 bg-dialect text-white flex justify-center items-center gap-2 hover:bg-muted",
+						!data.next && "pointer-events-none"
+					)}
+				>
+					<p className="hidden md:block">Chapter Selanjutnya</p>
+					<PiCaretDoubleRightBold />
+				</Link>
+			</div>
 		</div>
 	)
 }

@@ -17,7 +17,9 @@ const MainLayout = ({ children }) => {
 					<div>
 						<LogoHead />
 						<p className="text-white">Baca Manga One Piece</p>
-						<Link href={"/kimok"} className="text-secondary hover:text-secondary-foreground">Komik/Manga Lainnya</Link>
+						<Link href={"/kimok"} className="linking text-secondary-foreground hover:text-secondary-foreground">
+							Komik/Manga Lainnya
+						</Link>
 					</div>
 					<div>
 						<ThemeButton />

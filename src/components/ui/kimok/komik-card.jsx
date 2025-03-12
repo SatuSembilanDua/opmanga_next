@@ -18,7 +18,7 @@ const Card = ({ data, link }) => {
 	const linkhref = data.slug ? data.slug : data.id
 	return (
 		<>
-			<div className="group">
+			<div className="linking group">
 				<div className="relative h-[40vw] overflow-hidden rounded-xl md:h-[20vw]">
 					<Link href={`${link}${linkhref}`}>
 						<Image

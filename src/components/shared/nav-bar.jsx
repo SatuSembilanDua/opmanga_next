@@ -44,7 +44,7 @@ const NavbarContent = () => {
 const NavLink = ({ href, label }) => {
 	return (
 		<>
-			<Link href={href} className="px-4 py-2 text-primary-foreground hover:bg-dialect">
+			<Link href={href} className="linking px-4 py-2 text-primary-foreground hover:bg-dialect">
 				{label}
 			</Link>
 		</>

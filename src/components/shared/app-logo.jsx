@@ -3,7 +3,7 @@ import Link from "next/link"
 export const LogoHead = () => {
 	return (
 		<>
-			<Link href={"/"}>
+			<Link href={"/"} className="linking">
 				<SvgAppLogo className="text-white h-10" />
 			</Link>
 		</>
@@ -13,7 +13,7 @@ export const LogoHead = () => {
 export const KimokLogo = () => {
 	return (
 		<>
-			<Link href={"/kimok"}>
+			<Link href={"/kimok"} className="linking">
 				<SvgAppLogo className="text-white h-10" />
 			</Link>
 		</>

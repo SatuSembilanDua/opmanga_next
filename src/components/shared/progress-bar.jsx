@@ -64,10 +64,16 @@ const ProgressBar = () => {
 		// 	document.removeEventListener("click", handleLinkClick)
 		// 	clearTimeout(timeout)
 		// }
-
+		const linkingElements = document.querySelectorAll(".linking")
+		linkingElements.forEach((element) => {
+			element.addEventListener("click", handleRouteChangeStart)
+		})
 		handleRouteChangeStart()
 		const timeout = setTimeout(handleRouteChangeComplete, 1000)
 		return () => {
+			linkingElements.forEach((element) => {
+				element.removeEventListener("click", handleRouteChangeStart)
+			})
 			clearTimeout(timeout)
 		}
 		// }, [pathname, searchParams, router])
