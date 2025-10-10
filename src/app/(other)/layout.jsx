@@ -13,7 +13,7 @@ const MainLayout = ({ children }) => {
 				</div>
 			</div>
 			<NavBar />
-			<div className="min-h-screen px-4 py-4 md:px-20">{children}</div>
+			<div className="min-h-screen">{children}</div>
 			<div className="bg-primary min-h-20 border-t-4 border-dialect px-4 py-8">
 				<div className="flex justify-between">
 					<div>
