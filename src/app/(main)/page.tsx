@@ -6,7 +6,7 @@ import SkeletonList from "@/components/ui/op/skeleton-list";
 import { getChapterSearchPagin } from "@/server/chapter";
 import { Suspense } from "react";
 
-export type SearchParams = {
+type SearchParams = {
   query?: string;
   page?: string;
 };

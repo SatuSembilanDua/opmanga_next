@@ -1,7 +1,11 @@
-import { PageType } from "@/server/chapter";
 import LazyImage from "./lazy-image";
 
-const ReaderContent = ({ data }: { data: Array<PageType> }) => {
+type ReaderContentPropsType = Array<{
+  id: string;
+  img: string;
+}>;
+
+const ReaderContent = ({ data }: { data: ReaderContentPropsType }) => {
   return (
     <>
       <div className="flex flex-col items-center justify-center">

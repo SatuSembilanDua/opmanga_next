@@ -18,7 +18,10 @@ export const KimokLogo = () => {
   return (
     <>
       <Link href={"/kimok"} className="linking">
-        <SvgAppLogo className="h-10 text-white" />
+        <div className="flex items-center">
+          <Image className="h-12 w-auto" src={`/icon.png`} alt="logo" width={275} height={260} loading="eager" />
+          <h1 className="ml-2 text-5xl font-black">KIMOK</h1>
+        </div>
       </Link>
     </>
   );

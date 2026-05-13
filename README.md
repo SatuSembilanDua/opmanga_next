@@ -1,6 +1,6 @@
 <div align="center">
 
-![menime logo](public/imgs/logo.png)
+![menime logo](public/logo.png)
 
 ![Dynamic JSON Badge](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FSatuSembilanDua%2Fopmanga_next%2Fmain%2Fpackage.json&query=%24.version&label=Version) ![GitHub deployments](https://img.shields.io/github/deployments/SatuSembilanDua/opmanga_next/production) ![GitHub forks](https://img.shields.io/github/forks/SatuSembilanDua/opmanga_next) ![GitHub Repo stars](https://img.shields.io/github/stars/SatuSembilanDua/opmanga_next)
 

@@ -8,7 +8,7 @@ const ChapterList = ({ data }: { data: Array<ChapterType> }) => {
     <>
       {data.map((e) => (
         <Link key={e.id} href={`/view/${e.id}`} className="linking block border-b last:border-none">
-          <div className="flex items-center justify-start gap-2 py-1 hover:bg-muted">
+          <div className="flex items-center justify-start gap-2 py-1 hover:bg-muted focus:bg-muted active:bg-muted">
             <PiHashBold size={32} className="text-muted-foreground" />
             <div>
               <h2 className="text-base font-medium text-foreground">{e.title}</h2>
