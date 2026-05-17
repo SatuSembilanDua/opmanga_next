@@ -3,7 +3,7 @@ import Pagination from "@/components/shared/pagination";
 import Search from "@/components/shared/search";
 import KomikCard from "@/components/ui/kimok/komik-card";
 import PageTitle from "@/components/ui/kimok/page-title";
-import { SkeletonKomik } from "@/components/ui/kimok/skeleton-komik";
+import { SkeletonKimok } from "@/components/ui/kimok/skeleton-komik";
 import { getMangaSearchPagin } from "@/server/manga";
 import { Suspense } from "react";
 
@@ -12,17 +12,33 @@ type SearchParams = {
   page?: string;
 };
 
+type SearchParamsType = { searchParams: Promise<SearchParams | undefined> | SearchParams | undefined };
+
 export const generateMetadata = () => {
   return {
     title: `Manga`,
   };
 };
 
-const MangaPage = async ({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams | undefined> | SearchParams | undefined;
-}) => {
+const MangaPage = ({ searchParams }: SearchParamsType) => {
+  return (
+    <>
+      <div className="my-4 flex flex-col items-start justify-start md:mb-0 md:flex-row md:items-center md:justify-between">
+        <PageTitle>List Manga</PageTitle>
+        <div className="w-full md:w-auto">
+          <Suspense fallback={null}>
+            <Search />
+          </Suspense>
+        </div>
+      </div>
+      <Suspense fallback={<SkeletonKimok />}>
+        <MangaMainPage searchParams={searchParams} />
+      </Suspense>
+    </>
+  );
+};
+
+const MangaMainPage = async ({ searchParams }: SearchParamsType) => {
   const csp = await searchParams;
   const query = csp?.query || "";
   const currentPage = Number(csp?.page) || 1;
@@ -33,18 +49,8 @@ const MangaPage = async ({
   const { data, totalPage } = getData;
   return (
     <>
-      <div className="my-4 flex flex-col items-start justify-start md:mb-0 md:flex-row md:items-center md:justify-between">
-        <PageTitle>List Manga</PageTitle>
-        <div className="w-full md:w-auto">
-          <Suspense key={query + currentPage} fallback={null}>
-            <Search />
-          </Suspense>
-        </div>
-      </div>
       <div className="grid grid-cols-2 gap-4 pb-10 md:grid-cols-5 md:gap-6">
-        <Suspense key={query + currentPage} fallback={<SkeletonKomik />}>
-          <KomikCard data={data} link={`/manga/`} />
-        </Suspense>
+        <KomikCard data={data} link={`/manga/`} />
       </div>
       <Suspense key={query + currentPage} fallback={null}>
         <div className="mt-4 mb-20 flex justify-center">{totalPage > 1 && <Pagination totalPages={totalPage} />}</div>

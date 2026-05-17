@@ -16,7 +16,17 @@ export const generateMetadata = async ({ params }: { params: paramsType }) => {
   };
 };
 
-const ViewPage = async ({ params }: { params: paramsType }) => {
+const ViewPage = ({ params }: { params: paramsType }) => {
+  return (
+    <>
+      <Suspense fallback={<ReaderSkeleton />}>
+        <ViewMainPage params={params} />
+      </Suspense>
+    </>
+  );
+};
+
+const ViewMainPage = async ({ params }: { params: paramsType }) => {
   const { slug, id } = await params;
   const getData = await getPageData(slug, id);
   if (!getData) {
@@ -25,13 +35,11 @@ const ViewPage = async ({ params }: { params: paramsType }) => {
   const { Issue, pages } = getData;
   return (
     <>
-      <Suspense key={id} fallback={<ReaderSkeleton />}>
-        <div className="px-2 py-8 md:px-20">
-          <h1 className="mb-4 border-b-2 border-primary pb-1 text-2xl">{Issue.title}</h1>
-          <ReaderContent data={pages} />
-          <ReaderNav data={Issue.nav} list={`/kimok/${slug}`} />
-        </div>
-      </Suspense>
+      <div className="px-2 py-8 md:px-20">
+        <h1 className="mb-4 border-b-2 border-primary pb-1 text-2xl">{Issue.title}</h1>
+        <ReaderContent data={pages} />
+        <ReaderNav data={Issue.nav} list={`/kimok/${slug}`} />
+      </div>
     </>
   );
 };

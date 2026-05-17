@@ -28,7 +28,17 @@ export const generateMetadata = async ({ params }: { params: paramsType }) => {
   };
 };
 
-const ChapterPage = async ({ params, searchParams }: ChapterPagePropsType) => {
+const ChapterPage = ({ params, searchParams }: ChapterPagePropsType) => {
+  return (
+    <>
+      <Suspense fallback={<SkeletonIssue />}>
+        <ChapterMainPage params={params} searchParams={searchParams} />
+      </Suspense>
+    </>
+  );
+};
+
+const ChapterMainPage = async ({ params, searchParams }: ChapterPagePropsType) => {
   const { slug } = await params;
   const csp = await searchParams;
   const query = csp?.query || "";
@@ -40,16 +50,14 @@ const ChapterPage = async ({ params, searchParams }: ChapterPagePropsType) => {
   const { komik, totalPage, issue } = getData;
   return (
     <>
-      <Suspense key={`${slug}${currentPage}${query}`} fallback={<SkeletonIssue />}>
-        <div className="my-4 flex flex-col items-start justify-start md:mb-0 md:flex-row md:items-center md:justify-between">
-          <PageTitle>{komik.title}</PageTitle>
-          <div>
-            <Search />
-          </div>
+      <div className="my-4 flex flex-col items-start justify-start md:mb-0 md:flex-row md:items-center md:justify-between">
+        <PageTitle>{komik.title}</PageTitle>
+        <div>
+          <Search />
         </div>
-        <IssuePage komik={komik} data={issue} />
-        <div className="mt-4 mb-20 flex justify-center">{totalPage > 1 && <Pagination totalPages={totalPage} />}</div>
-      </Suspense>
+      </div>
+      <IssuePage komik={komik} data={issue} />
+      <div className="mt-4 mb-20 flex justify-center">{totalPage > 1 && <Pagination totalPages={totalPage} />}</div>
     </>
   );
 };

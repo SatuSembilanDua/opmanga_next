@@ -33,3 +33,13 @@ export const SkeletonIssue = () => {
     </>
   );
 };
+
+export const SkeletonKimok = () => {
+  return (
+    <>
+      <div className="grid grid-cols-2 gap-4 pb-10 md:grid-cols-5 md:gap-6">
+        <SkeletonKomik />
+      </div>
+    </>
+  );
+};

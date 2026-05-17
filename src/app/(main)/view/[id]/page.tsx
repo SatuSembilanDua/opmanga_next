@@ -5,7 +5,11 @@ import ReaderSkeleton from "@/components/shared/reader-skeleton";
 import { getChapterPage } from "@/server/chapter";
 import { Suspense } from "react";
 
-export const generateMetadata = async ({ params }: { params: Promise<{ id: string }> }) => {
+type ParamsType = {
+  params: Promise<{ id: string }>;
+};
+
+export const generateMetadata = async ({ params }: ParamsType) => {
   const { id } = await params;
   const data = await getChapterPage(id);
   const title = data?.title ?? `Not Found`;
@@ -14,7 +18,17 @@ export const generateMetadata = async ({ params }: { params: Promise<{ id: strin
   };
 };
 
-const ViewPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+const ViewPage = ({ params }: ParamsType) => {
+  return (
+    <>
+      <Suspense fallback={<ReaderSkeleton />}>
+        <ViewMainPage params={params} />
+      </Suspense>
+    </>
+  );
+};
+
+const ViewMainPage = async ({ params }: ParamsType) => {
   const { id } = await params;
   const data = await getChapterPage(id);
   if (!data) {
@@ -22,13 +36,11 @@ const ViewPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
   return (
     <>
-      <Suspense key={id} fallback={<ReaderSkeleton />}>
-        <div className="px-2 py-8 md:px-20">
-          <h1 className="mb-4 border-b-2 border-primary pb-1 text-2xl">{data.title}</h1>
-          <ReaderContent data={data.pages} />
-          <ReaderNav data={data.nav} list="/" />
-        </div>
-      </Suspense>
+      <div className="px-2 py-8 md:px-20">
+        <h1 className="mb-4 border-b-2 border-primary pb-1 text-2xl">{data.title}</h1>
+        <ReaderContent data={data.pages} />
+        <ReaderNav data={data.nav} list="/" />
+      </div>
     </>
   );
 };

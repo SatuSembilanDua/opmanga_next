@@ -11,11 +11,24 @@ type SearchParams = {
   page?: string;
 };
 
-const HomePage = async ({
-  searchParams,
-}: {
+type SearchParamsType = {
   searchParams: Promise<SearchParams | undefined> | SearchParams | undefined;
-}) => {
+};
+
+const HomePage = ({ searchParams }: SearchParamsType) => {
+  return (
+    <>
+      <div className="px-4 py-8 md:px-20">
+        <h1 className="mb-4 border-b-2 border-primary pb-1 text-2xl">LIST MANGA ONE PIECE</h1>
+        <Suspense fallback={<SkeletonList />}>
+          <HomeMainPage searchParams={searchParams} />
+        </Suspense>
+      </div>
+    </>
+  );
+};
+
+const HomeMainPage = async ({ searchParams }: SearchParamsType) => {
   const csp = await searchParams;
   const query = csp?.query || "";
   const currentPage = Number(csp?.page) || 1;
@@ -26,17 +39,12 @@ const HomePage = async ({
   const { data, totalPage } = getData;
   return (
     <>
-      <div className="px-4 py-8 md:px-20">
-        <h1 className="mb-4 border-b-2 border-primary pb-1 text-2xl">LIST MANGA ONE PIECE</h1>
-        <Search />
-        <Suspense key={query + currentPage} fallback={<SkeletonList />}>
-          <div className="my-4 border-y-2 border-primary">
-            <ChapterList data={data} />
-          </div>
-          <div className="mt-4 flex justify-center">
-            <Pagination totalPages={totalPage} />
-          </div>
-        </Suspense>
+      <Search />
+      <div className="my-4 border-y-2 border-primary">
+        <ChapterList data={data} />
+      </div>
+      <div className="mt-4 flex justify-center">
+        <Pagination totalPages={totalPage} />
       </div>
     </>
   );

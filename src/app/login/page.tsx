@@ -1,17 +1,10 @@
 "use client";
 import { LogoHead } from "@/components/shared/app-logo";
+import { autentikasi } from "@/server/user";
+import { useActionState } from "react";
 
 const LoginPage = () => {
-  const email = "";
-  const password = "";
-  const error = null;
-  const handleSubmit = () => {};
-  const setEmail = (v: string) => {
-    console.log(v);
-  };
-  const setPassword = (v: string) => {
-    console.log(v);
-  };
+  const [state, formAction, isPending] = useActionState(autentikasi, null);
   return (
     <>
       <div className="bg-primary">
@@ -24,7 +17,12 @@ const LoginPage = () => {
               <h2 className="text-xl leading-tight font-bold tracking-tight text-card-foreground md:text-2xl">
                 Sign in to your account
               </h2>
-              <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+              {state?.error && (
+                <div className="mb-4 animate-shake rounded border border-red-200 bg-red-50 p-3 text-sm text-red-600">
+                  {state.error}
+                </div>
+              )}
+              <form action={formAction} className="space-y-4 md:space-y-6">
                 <div>
                   <label htmlFor="email" className="mb-2 block text-sm font-medium text-card-foreground">
                     Your email
@@ -35,8 +33,7 @@ const LoginPage = () => {
                     id="email"
                     className="w-full rounded-sm border p-2 text-sm outline-2"
                     placeholder="name@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    required
                   />
                 </div>
                 <div>
@@ -50,16 +47,15 @@ const LoginPage = () => {
                     placeholder="••••••••"
                     autoComplete="on"
                     className="w-full rounded-sm border p-2 text-sm outline-2"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    required
                   />
                 </div>
-                {error && <div className="text-destructive">{error}</div>}
                 <button
                   type="submit"
+                  disabled={isPending}
                   className="focus:ring-primary-300 w-full rounded-lg bg-primary px-5 py-2.5 text-center text-sm font-medium text-primary-foreground hover:bg-secondary focus:ring-4 focus:outline-none"
                 >
-                  Sign in
+                  {isPending ? `...` : `Sign in`}
                 </button>
               </form>
             </div>

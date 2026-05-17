@@ -27,7 +27,7 @@ export const getAllKomik = async () => {
   }
 };
 
-export const getKomikBySlug = async (slug: string) => {
+export const getKomikBySlug = cache(async (slug: string) => {
   try {
     const [data] = await db.select().from(komik).where(eq(komik.slug, slug)).limit(1);
     return data;
@@ -35,7 +35,7 @@ export const getKomikBySlug = async (slug: string) => {
     console.error(error);
     return null;
   }
-};
+});
 
 export const getKomikSearchPagin = async (slug: string, search: string, page: number = 1) => {
   try {
