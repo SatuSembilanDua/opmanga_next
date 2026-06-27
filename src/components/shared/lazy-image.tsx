@@ -33,6 +33,7 @@ const LazyImage = ({
 }: LazyImageProps) => {
   const [isVisible, setIsVisible] = useState(priority);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isFallback, setIsFallback] = useState(false);
   const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,25 +64,48 @@ const LazyImage = ({
     onLoad?.();
   };
 
+  const handleError = () => {
+    setIsFallback(true);
+  };
+
   return (
     <>
       <div ref={imgRef} className={cn(isLoaded ? "h-full" : "h-96", "flex w-full items-center justify-center")}>
-        <Link href={src} target="_blank" className="flex w-full items-center justify-center hover:bg-accent">
-          <Image
-            src={isVisible ? src : "/blank.svg"}
-            alt={alt}
-            width={!fill ? width : undefined}
-            height={!fill ? height : undefined}
-            fill={fill}
-            sizes={sizes}
-            quality={75}
-            priority={priority}
-            placeholder={placeholder}
-            blurDataURL={blurDataURL}
-            className={cn(`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`, className)}
-            onLoad={handleLoad}
-            loading={priority ? undefined : "lazy"}
-          />
+        <Link
+          href={isFallback ? `/api/image?url=${src}` : src}
+          target="_blank"
+          className="flex w-full items-center justify-center hover:bg-accent"
+        >
+          {!isFallback ? (
+            <Image
+              src={isVisible ? src : "/blank.svg"}
+              alt={alt}
+              width={!fill ? width : undefined}
+              height={!fill ? height : undefined}
+              fill={fill}
+              sizes={sizes}
+              quality={75}
+              priority={priority}
+              placeholder={placeholder}
+              blurDataURL={blurDataURL}
+              className={cn(`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`, className)}
+              onLoad={handleLoad}
+              onError={handleError}
+              loading={priority ? undefined : "lazy"}
+            />
+          ) : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={isVisible ? `/api/image?url=${src}` : "/blank.svg"}
+              alt={alt}
+              width={!fill ? width : undefined}
+              height={!fill ? height : undefined}
+              sizes={sizes}
+              className={cn(`transition-opacity duration-300 ${isLoaded ? "opacity-100" : "opacity-0"}`, className)}
+              onLoad={handleLoad}
+              loading={priority ? undefined : "lazy"}
+            />
+          )}
         </Link>
       </div>
     </>
